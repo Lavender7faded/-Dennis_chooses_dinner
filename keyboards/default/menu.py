@@ -1,4 +1,15 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
+
+yes_no = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text='Да', callback_data=),
+            InlineKeyboardButton(text='Нет', callback_data=)
+
+        ]
+    ]
+)
+
 
 menu_garnish = ReplyKeyboardMarkup(
     keyboard = [
@@ -10,28 +21,25 @@ menu_garnish = ReplyKeyboardMarkup(
             KeyboardButton(text = 'Чечевица'),
             KeyboardButton(text = 'Кус-кус')
         ],
-        [
-            KeyboardButton(text = 'Я на диете🙅‍♂️')
-        ],
     ],
     resize_keyboard = True
 )
-menu_diet = ReplyKeyboardMarkup(
-keyboard = [
-    [
-        KeyboardButton(text = 'Салат'),
-        KeyboardButton(text = 'Творог')
-    ],
-    [
-        KeyboardButton(text = 'Йогурт'),
-        KeyboardButton(text = 'Фрукти')
-    ],
-    [
-        KeyboardButton(text = 'Обратно к гарниру')
-    ],
-],
-resize_keyboard = True
-)
+# menu_diet = ReplyKeyboardMarkup(
+# keyboard = [
+#     [
+#         KeyboardButton(text = 'Салат'),
+#         KeyboardButton(text = 'Творог')
+#     ],
+#     [
+#         KeyboardButton(text = 'Йогурт'),
+#         KeyboardButton(text = 'Фрукти')
+#     ],
+#     [
+#         KeyboardButton(text = 'Обратно к гарниру')
+#     ],
+# ],
+# resize_keyboard = True
+# )
 menu_entree = ReplyKeyboardMarkup(
 keyboard = [
     [
@@ -49,6 +57,22 @@ keyboard = [
 ],
 resize_keyboard = True
 )
+# menu_other_time = ReplyKeyboardMarkup(
+# keyboard = [
+#     [
+#         KeyboardButton(text = '17:00')
+#     ],
+#     [        
+#         KeyboardButton(text = '18:00')
+#     ],
+#     [
+#         KeyboardButton(text = 'Давай сегодня попозже'),
+#         KeyboardButton(text = 'Обратно к меню для диеты')
+#     ],
+    
+# ],
+#     resize_keyboard = True
+# )
 menu_time = ReplyKeyboardMarkup(
 keyboard = [
     [
