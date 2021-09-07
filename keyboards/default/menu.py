@@ -1,15 +1,15 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
+from keyboards.default.callback_datas import choos_callback
 
-yes_no = InlineKeyboardMarkup(
-    inline_keyboard=[
+yes_no = ReplyKeyboardMarkup(
+    keyboard=[
         [
-            InlineKeyboardButton(text='Да', callback_data=),
-            InlineKeyboardButton(text='Нет', callback_data=)
-
+            KeyboardButton(text='Да'),
+            KeyboardButton(text='Нет'),
         ]
-    ]
+    ],
+    resize_keyboard = True
 )
-
 
 menu_garnish = ReplyKeyboardMarkup(
     keyboard = [
@@ -57,6 +57,7 @@ keyboard = [
 ],
 resize_keyboard = True
 )
+
 # menu_other_time = ReplyKeyboardMarkup(
 # keyboard = [
 #     [
@@ -84,6 +85,54 @@ keyboard = [
     [
         KeyboardButton(text = 'Давай сегодня попозже'),
         KeyboardButton(text = 'Обратно к основному блюду')
+    ],
+    
+],
+    resize_keyboard = True
+)
+
+menu_garnish_tomorrow = ReplyKeyboardMarkup(
+    keyboard = [
+        [
+            KeyboardButton(text = 'Пюре'),
+            KeyboardButton(text = 'Рис')
+        ],
+        [
+            KeyboardButton(text = 'Булгур')
+        ],
+    ],
+    resize_keyboard = True
+)
+
+menu_entree_tomorrow = ReplyKeyboardMarkup(
+keyboard = [
+    [
+        KeyboardButton(text = 'Свежие овощи'),
+        KeyboardButton(text = 'Овощи на пару')
+    ],
+    [
+        KeyboardButton(text = 'Легкий салат'),
+        KeyboardButton(text = 'Мясной соус')
+    ],
+    [
+        KeyboardButton(text = 'Гарнира хватит👌'),
+         KeyboardButton(text = 'Назад к гарниру')
+    ],
+],
+resize_keyboard = True
+)
+
+menu_time_tomorrow = ReplyKeyboardMarkup(
+keyboard = [
+    [
+        KeyboardButton(text = '18:30')
+    ],
+    [        
+        KeyboardButton(text = '19:30')
+    ],
+    [
+        KeyboardButton(text = 'Давай попозже'),
+        KeyboardButton(text = 'Назад к основному блюду')
     ],
     
 ],
