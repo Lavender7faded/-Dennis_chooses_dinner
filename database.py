@@ -59,12 +59,15 @@ def db_table_users_id(user_id: int):
 	cursor.execute('INSERT INTO users_id (user_id) VALUES (?)', (user_id, ))
 	conn.commit()
 
-cursor.execute("SELECT user_id FROM users_id")
-user_id = cursor.fetchall()
-users = []
-i = 0 
-while i != len(user_id):
-    users_id = user_id[i][0]
-    users.append(users_id)
-    i += 1
-print(users)
+
+def select_users_id():
+    user_id = "SELECT user_id FROM users_id"
+    return [x[0] for x in conn.execute(user_id)]
+
+def select_user_dinner():
+    cursor.execute("SELECT user_id, user_garnish, user_entree, user_dinner_time FROM user_dinner")
+    dinner = cursor.fetchall()
+    for i in dinner:
+        print(i)
+
+select_user_dinner()

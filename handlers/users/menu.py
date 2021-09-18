@@ -9,12 +9,20 @@ from database import db_table_users_id, db_table_user_dinner, db_table_user_dinn
 @dp.message_handler(Command('start'))
 async def bot_start(message:Message):
     await bot.send_message(message.from_user.id, 'Привет, давай составим твой ужин🤤\nЖмякни /menu')
+    log(message)
+    
+    user_id = message.from_user.id
+    try:
+        db_table_users_id(user_id = user_id)
+    except Exception:
+        print(f'{message.from_user.first_name} @{message.from_user.username} повторно заповнює бота')
  
 
 @dp.message_handler(Command('menu'))
 async def show_menu(message:Message):
     await message.answer('Выбери какой гарнир хочешь на ужин',
     reply_markup = menu_garnish)
+    log(message)
  
 
 @dp.message_handler(Text(equals=['Паста', 'Гречка', 'Кус-кус', 'Чечевица']))
@@ -28,10 +36,9 @@ async def get_garnish(message:Message):
     # else:
     await message.answer(f'Ты выбрал {garnish}. \nТеперь выбери что будешь к гарниру', 
     reply_markup = menu_entree)
+    log(message)
 
-    user_id = message.from_user.id
 
-    db_table_users_id(user_id = user_id)
 
 
 # @dp.message_handler(Text(equals=['Салат', 'Творог', 'Йогурт', 'Фрукти', 'Обратно к гарниру']))
@@ -58,6 +65,7 @@ async def get_entree(message:Message):
     else:
         await message.answer(f'Ты выбрал {entree}. \nА теперь выбери удобное время',
         reply_markup = menu_time)
+        log(message)
 
 
 
@@ -97,6 +105,7 @@ async def get_time(message:Message):
     else:
         await message.answer(f'Итак, твой ужин это {garnish} с {entree} и состоится он в {time}.\nПриятного аппетита🍽 \nМожет хочешь составить ужин на завтра?',
         reply_markup = yes_no)
+        log(message)
 
         
         time_now = datetime.datetime.now()
@@ -119,9 +128,11 @@ async def get_yes_no(message:Message):
     yes_no = message.text
     if message.text == 'Да':
         await message.answer('Составим ужин на завтра😋', reply_markup = menu_garnish_tomorrow)
+        log(message)
     else:
         await message.answer(f'Не смею задерживать🖐',
         reply_markup = ReplyKeyboardRemove())
+        log(message)
 
 
 
@@ -131,6 +142,7 @@ async def get_garnish_tomorrow(message:Message):
     garnish_tomorrow = message.text
     await message.answer(f'На завтра ты выбрал {garnish_tomorrow}. \nТеперь выбери что будешь к гарниру', 
     reply_markup = menu_entree_tomorrow)
+    log(message)
 
 
 @dp.message_handler(Text(equals=['Свежие овощи', 'Овощи на пару', 'Легкий салат', 'Мясной соус', 'Гарнира хватит👌', 'Назад к гарниру']))
@@ -143,6 +155,7 @@ async def get_entree_tomorrow(message:Message):
     else:
         await message.answer(f'На завтра ты выбрал {entree_tomorrow}. \nА теперь выбери удобное время',
         reply_markup = menu_time_tomorrow)
+        log(message)
 
             
 
@@ -156,8 +169,8 @@ async def get_time_tomorrow(message:Message):
     else:
         await message.answer(f'И так, твой ужин на завтра это {garnish_tomorrow} с {entree_tomorrow} и состоится он в {time_tomorrow}.\nПриятного аппетита🍽',
         reply_markup = ReplyKeyboardRemove())
-
-            
+        log(message)
+ 
         time_now = datetime.datetime.now()
 
         user_time = time_now.strftime("%d-%m-%Y %H:%M")

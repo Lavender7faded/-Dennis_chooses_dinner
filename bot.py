@@ -1,7 +1,7 @@
 from aiogram import executor
 import asyncio
 import aioschedule
-from database import init_db_user_dinner, init_db_users_id, init_db_user_dinner_tomorrow, users
+from database import init_db_user_dinner, init_db_users_id, init_db_user_dinner_tomorrow, select_users_id
 import handlers
 
 
@@ -10,15 +10,18 @@ from loader import dp, bot
 from set_bot_comands import set_default_commands
 
 @dp.message_handler()
-async def hi_print():
-    for id in users:
-        try:
-            await bot.send_message(chat_id = id, text = "Привет!")
-        except Exception as e:
-            print(e)
+async def choose_our_dinner():
+    for id in select_users_id():
+        await bot.send_message(chat_id = id, text = "Хей🖖 не забудь выбрать свой ужин сегодня")
+@dp.message_handler()
+async def this_is_our_dinner():
+    for id in select_users_id():
+        await bot.send_message(chat_id = id, text = "")
+
 
 async def scheduler():
-    aioschedule.every().day.at("17:25").do(hi_print)
+    aioschedule.every().day.at("10:00").do(this_is_our_dinner)
+    aioschedule.every().day.at("17:01").do(choose_our_dinner)
     while True:
         await aioschedule.run_pending()
         await asyncio.sleep(1)
