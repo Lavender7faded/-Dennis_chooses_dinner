@@ -1,5 +1,15 @@
+from keyboards.default.callback_datas import choose_callback
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
-from keyboards.default.callback_datas import choos_callback
+
+inline_yes_no = InlineKeyboardMarkup(
+    inline_keyboard = [
+        [
+            InlineKeyboardButton(text = 'Да', callback_data = choose_callback.new(item_name = 'yes')),
+            InlineKeyboardButton(text = 'Нет', callback_data = choose_callback.new(item_name = 'no'))
+        ]
+    ],
+    one_time_keyboard = True
+)
 
 yes_no = ReplyKeyboardMarkup(
     keyboard=[
@@ -10,6 +20,7 @@ yes_no = ReplyKeyboardMarkup(
     ],
     resize_keyboard = True
 )
+
 
 menu_garnish = ReplyKeyboardMarkup(
     keyboard = [
@@ -24,22 +35,8 @@ menu_garnish = ReplyKeyboardMarkup(
     ],
     resize_keyboard = True
 )
-# menu_diet = ReplyKeyboardMarkup(
-# keyboard = [
-#     [
-#         KeyboardButton(text = 'Салат'),
-#         KeyboardButton(text = 'Творог')
-#     ],
-#     [
-#         KeyboardButton(text = 'Йогурт'),
-#         KeyboardButton(text = 'Фрукти')
-#     ],
-#     [
-#         KeyboardButton(text = 'Обратно к гарниру')
-#     ],
-# ],
-# resize_keyboard = True
-# )
+
+
 menu_entree = ReplyKeyboardMarkup(
 keyboard = [
     [
@@ -58,22 +55,7 @@ keyboard = [
 resize_keyboard = True
 )
 
-# menu_other_time = ReplyKeyboardMarkup(
-# keyboard = [
-#     [
-#         KeyboardButton(text = '17:00')
-#     ],
-#     [        
-#         KeyboardButton(text = '18:00')
-#     ],
-#     [
-#         KeyboardButton(text = 'Давай сегодня попозже'),
-#         KeyboardButton(text = 'Обратно к меню для диеты')
-#     ],
-    
-# ],
-#     resize_keyboard = True
-# )
+
 menu_time = ReplyKeyboardMarkup(
 keyboard = [
     [
@@ -91,6 +73,7 @@ keyboard = [
     resize_keyboard = True
 )
 
+
 menu_garnish_tomorrow = ReplyKeyboardMarkup(
     keyboard = [
         [
@@ -103,6 +86,7 @@ menu_garnish_tomorrow = ReplyKeyboardMarkup(
     ],
     resize_keyboard = True
 )
+
 
 menu_entree_tomorrow = ReplyKeyboardMarkup(
 keyboard = [
@@ -121,6 +105,7 @@ keyboard = [
 ],
 resize_keyboard = True
 )
+
 
 menu_time_tomorrow = ReplyKeyboardMarkup(
 keyboard = [

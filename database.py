@@ -1,5 +1,5 @@
-import datetime
 import sqlite3
+import datetime
 
 conn = sqlite3.connect('dinnerbot.db')
 cursor = conn.cursor()
@@ -8,9 +8,9 @@ def init_db_user_dinner():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS user_dinner (
             id                          INTEGER PRIMARY KEY,
+            user_id                     INTEGER UNIQUE,
             data                        INTEGER,
             time                        INTEGER,
-            user_id                     INTEGER,
             user_first_name             STRING,
             user_surname                STRING,
             user_garnish                TEXT,
@@ -24,9 +24,9 @@ def init_db_user_dinner_tomorrow():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS user_dinner_tomorrow (
             id                          INTEGER PRIMARY KEY,
+            user_id                     INTEGER UNIQUE,
             data                        INTEGER,
             time                        INTEGER,
-            user_id                     INTEGER,
             user_first_name             STRING,
             user_surname                STRING,
             user_garnish_tomorrow       TEXT,
@@ -36,68 +36,43 @@ def init_db_user_dinner_tomorrow():
     ''')
     conn.commit()
 
-def init_db_users_id():
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS users_id (
-            id                  INTEGER PRIMARY KEY,
-            user_id             INTEGER UNIQUE
-    )
-    ''')
-    conn.commit()
 
-def db_table_user_dinner(data: int, time: int, user_id: int, user_first_name: str, user_surname: str, user_garnish: str, user_entree: str, 
+def db_table_user_dinner(user_id: int, data: int, time: int, user_first_name: str, user_surname: str, user_garnish: str, user_entree: str, 
                     user_dinner_time: int):
-	cursor.execute('''INSERT INTO user_dinner (data, time, user_id, user_first_name, user_surname, user_garnish, user_entree, 
-                    user_dinner_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)''', 
-                    (data, time, user_id, user_first_name, user_surname, user_garnish, user_entree, 
-                    user_dinner_time))
+	cursor.execute('''INSERT OR REPLACE INTO user_dinner (user_id, data, time, user_first_name, user_surname, user_garnish, user_entree, user_dinner_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)''' , 
+                    (user_id, data, time, user_first_name, user_surname, user_garnish, user_entree, user_dinner_time))
 	conn.commit()
 
-def db_table_user_dinner_tomorrow(data: int, time: int, user_id: int, user_first_name: str, user_surname: str, user_garnish_tomorrow: str, user_entree_tomorrow: str, user_dinner_time_tomorrow: int):
-	cursor.execute('''INSERT INTO user_dinner_tomorrow (data, time, user_id, user_first_name, user_surname, user_garnish_tomorrow,
+def db_table_user_dinner_tomorrow(user_id: int, data: int, time: int, user_first_name: str, user_surname: str, user_garnish_tomorrow: str, user_entree_tomorrow: str, user_dinner_time_tomorrow: int):
+	cursor.execute('''INSERT OR REPLACE INTO user_dinner_tomorrow (user_id, data, time, user_first_name, user_surname, user_garnish_tomorrow,
                     user_entree_tomorrow, user_dinner_time_tomorrow ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)''', 
-                    (data, time, user_id, user_first_name, user_surname, user_garnish_tomorrow, user_entree_tomorrow, user_dinner_time_tomorrow))
+                    (user_id, data, time, user_first_name, user_surname, user_garnish_tomorrow, user_entree_tomorrow, user_dinner_time_tomorrow))
 	conn.commit()
 
-def db_table_users_id(user_id: int):
-	cursor.execute('INSERT INTO users_id (user_id) VALUES (?)', (user_id, ))
-	conn.commit()
-
-
-def select_users_id():
-    user_id = "SELECT user_id FROM users_id"
-    return [x[0] for x in conn.execute(user_id)]
 
 def select_user_dinner():
-    user_dinner = "SELECT data, user_id FROM user_dinner"
+    user_dinner = "SELECT user_id, data FROM user_dinner"
     return [x for x in conn.execute(user_dinner)]
 
 def select_user_dinner_tomorrow():
-    user_dinner_tomorrow = "SELECT user_garnish_tomorrow, user_entree_tomorrow, user_dinner_time_tomorrow FROM user_dinner_tomorrow"
+    user_dinner_tomorrow = "SELECT user_id, data, user_garnish_tomorrow, user_entree_tomorrow, user_dinner_time_tomorrow FROM user_dinner_tomorrow"
     return [x for x in conn.execute(user_dinner_tomorrow)]
 
-# def select_user_dinner():
-#     cursor.execute("SELECT user_id, user_garnish, user_entree, user_dinner_time FROM user_dinner")
-#     dinner = cursor.fetchall()
-#     for i in dinner:
-#         print(i)
 
+def select_all():
+    all_users = "SELECT data, time, user_first_name, user_surname, user_garnish, user_entree, user_dinner_time FROM user_dinner"
+    return [x for x in conn.execute(all_users)]
 
-def users_id_reminder():
-    time_now = datetime.datetime.now()
+def select_all_tomorrow():
+    all_users_tomorrow = "SELECT data, time, user_first_name, user_surname, user_garnish_tomorrow, user_entree_tomorrow, user_dinner_time_tomorrow FROM user_dinner_tomorrow"
+    return [x for x in conn.execute(all_users_tomorrow)]
 
-    computer_time = time_now.strftime("%d-%m-%Y")
-    ids = []
-    for users in select_user_dinner():
-        if computer_time != users[0]:
-            for id in select_users_id():
-                if id == users[1]:
-                    ids.append(id)
-    return ids
-print(users_id_reminder())
-
-# for id in set(users_id_reminder()):
-#     print(id)    
-            
-
-print(select_user_dinner_tomorrow())
+def the_users_without_dinner():
+    users_list = []
+    for id in select_user_dinner_tomorrow():
+        for users in select_user_dinner():
+            time_now = datetime.datetime.now()
+            computer_data = time_now.strftime("%d-%m-%Y")
+            if computer_data != users[1] and id[2] == None:
+                users_list.append(users[0])
+    return users_list

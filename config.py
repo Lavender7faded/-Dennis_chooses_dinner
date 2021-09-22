@@ -1,2 +1,2 @@
-BOT_TOKEN = '1927938097:AAGJOkfou9Js2g1PyAatyTVbZDLr05WAO_I'
-admin_id = 404231378
+BOT_TOKEN = 'your token'
+admin_id = 123456 #твій id
