@@ -1,2 +1,2 @@
-BOT_TOKEN = 'your token'
-admin_id = 123456 #твій id
+BOT_TOKEN = 'your_bot_token'    # enter your bot token from @BotFather
+admin_id = 111111               # enter your id

@@ -10,11 +10,11 @@ from database import init_db_user_dinner, init_db_user_dinner_tomorrow
 
 
 async def on_startup(dp): 
-    await set_default_commands(dp)
-    asyncio.create_task(scheduler())
-    init_db_user_dinner()
-    init_db_user_dinner_tomorrow()
+    await set_default_commands(dp)                       # plug in menu button
+    asyncio.create_task(scheduler())                     # plug in scheduled messages
+    init_db_user_dinner()                                # creating database table
+    init_db_user_dinner_tomorrow()                       # creating database table for tomorrow dishes
 
  
 if __name__ == '__main__':
-    executor.start_polling(dp, on_startup=on_startup)
+    executor.start_polling(dp, on_startup=on_startup)    # start the bot

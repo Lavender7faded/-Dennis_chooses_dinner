@@ -4,9 +4,12 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 from config import BOT_TOKEN
 
-bot = Bot(token=BOT_TOKEN, parse_mode=types.ParseMode.HTML)
-storage = MemoryStorage()
-dp = Dispatcher(bot, storage=storage)
+bot = Bot(token=BOT_TOKEN, parse_mode=types.ParseMode.HTML)         # creating your bot and set formatting
+storage = MemoryStorage()                                           # specifying state store
+dp = Dispatcher(bot, storage=storage)                               # creating handler
+
+
+# can add logging for working without database
 
 # def log(message):
 #     from datetime import datetime
