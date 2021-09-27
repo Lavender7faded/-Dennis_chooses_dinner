@@ -2,4 +2,3 @@ aiogram
 asyncio
 datetime
 aioschedule
-logging
