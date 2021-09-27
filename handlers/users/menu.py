@@ -13,7 +13,7 @@ async def bot_start(message:Message):
     Sending initial message after writing or clicking /start
     '''
 
-    await bot.sending_message(message.from_user.id, 'Привет, давай составим твой ужин🤤\nЖмякни /menu')
+    await bot.send_message(message.from_user.id, 'Привет, давай составим твой ужин🤤\nЖмякни /menu')
     # log(message)
     
 
