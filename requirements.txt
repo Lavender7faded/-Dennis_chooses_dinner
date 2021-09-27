@@ -1,6 +1,5 @@
 aiogram
 asyncio
-sqlite3==3.36.0
 datetime
 aioschedule
 logging
