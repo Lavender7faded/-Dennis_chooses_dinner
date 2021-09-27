@@ -67,8 +67,8 @@ async def scheduler():
     Setting the time for sending scheduled message  
     '''
 
-    aioschedule.every().day.at("18:01").do(this_your_dinner_today)
-    aioschedule.every().day.at("18:10").do(choose_your_dinner)
+    aioschedule.every().day.at("10:00").do(this_your_dinner_today)
+    aioschedule.every().day.at("17:01").do(choose_your_dinner)
     while True:
         await aioschedule.run_pending()
         await asyncio.sleep(1)
